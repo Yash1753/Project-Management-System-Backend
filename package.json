@@ -1,0 +1,26 @@
+{
+  "name": "project-management-system-backend",
+  "version": "1.0.0",
+  "description": "a project management system inspired from basecamp",
+  "keywords": [
+    "Backend"
+  ],
+  "homepage": "https://github.com/Yash1753/Project-Management-System-Backend#readme",
+  "bugs": {
+    "url": "https://github.com/Yash1753/Project-Management-System-Backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yash1753/Project-Management-System-Backend.git"
+  },
+  "license": "MIT",
+  "author": "Yash",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "devDependencies": {
+    "prettier": "3.7.4"
+  }
+}
