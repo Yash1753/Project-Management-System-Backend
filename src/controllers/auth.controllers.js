@@ -3,6 +3,7 @@ import {ApiResponse} from "../utils/api-response.js"
 import {ApiError} from "../utils/api-error.js"
 import { asyncHandler } from "../utils/asynchandler.js";
 import { emailVerificationMailgenContent, sendMail } from "../utils/mail.js";
+import { cookie } from "express-validator";
 
 
 const generateAccessAndRefreshTokens = async(_id)=>{
@@ -62,7 +63,42 @@ const registerUser = asyncHandler(async (req,res) => {
             )
         )
 
+});
+
+const login = asyncHandler(async function(req,res){
+    const {email,password} = req.body;
+    if(!email) throw new ApiError(400,"email is required",[]);
+
+    //find user
+
+    const user = await User.findOne({
+        email
+    });
+
+    if(!user) throw new ApiError(400,"user does not exist",[]);
+
+    const validPass = await user.isPasswordCorrect(password);
+    if(!validPass) throw new ApiError(400,"invalid creditianls",[]);
+
+   const{refreshToken, accessToken}  =  await generateAccessAndRefreshTokens(user._id);
+
+    const loggedInUser = await User.findById(user._id).select(
+        "-password -refreshToken -emailVerificationToken -emailVerificationExpiry"
+    )
+
+    //if(!loggedInUser) throw new ApiError(500, "something went worng while loggin user")
+
+    const options = {
+        httpOnly : true,
+        secure : true,
+    }
+
+    return res.status(200)
+        .cookie("access_Token", accessToken, options)
+        .cookie("Refresh_token",refreshToken, options)
+        .json(new ApiResponse(200,{user:loggedInUser,accessToken}, "user logged in successfully"))
+    
 })
 
 
-export {registerUser}
+export {registerUser,login}

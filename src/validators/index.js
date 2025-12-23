@@ -10,5 +10,11 @@ const userRegisterValidator = ()=>{
         body("fullname").optional().trim().notEmpty(),
     ]
 }
+const loginValidator = ()=>{
+    return [
+         body("email").trim().notEmpty().withMessage("Email is required").isEmail().withMessage("email is invalid"),
+         body("password").trim().notEmpty().withMessage("password can not be empty"),
+    ]
+}
 
-export {userRegisterValidator};
+export {userRegisterValidator,loginValidator};
