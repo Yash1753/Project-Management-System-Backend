@@ -16,7 +16,7 @@ const userSchema  = new mongoose.Schema({
 
     username : {
         type : String,
-        require: true,
+        required: true,
         unique : true,
         lowercase : true,
         trim : true,
@@ -73,9 +73,8 @@ const userSchema  = new mongoose.Schema({
 
 //using a prehook to hash passsword
 userSchema.pre("save" , async function(next){ //this will run on every save of have to write a guard for password
-    if(!this.isModified("password")) return next(); 
+    if(!this.isModified("password")) return ; 
     this.password = await bcrypt.hash(this.password, 10);
-    next();
 }); //we do not use a async function as something we do need context
 
 userSchema.methods.isPasswordCorrect = async function(password){
@@ -101,7 +100,7 @@ userSchema.methods.generateRefreshToken = function(){
 
 userSchema.methods.generateTemporaryTokens = function(){
     const unhashToken = crypto.randomBytes(20).toString("hex")
-    const hashedToken = crypto.createHash("SHA256").update(unhashToken).digest("hex")
+    const hashedToken = crypto.createHash("sha256").update(unhashToken).digest("hex")
     const tokenExpiry = Date.now() + (20*60*1000)
 
     return {unhashToken,hashedToken,tokenExpiry};

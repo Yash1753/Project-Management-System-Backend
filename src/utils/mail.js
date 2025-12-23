@@ -40,7 +40,6 @@ const sendMail = async(options)=>{
     }
 }
 
-
 const emailVerificationMailgenContent = function(username,verificationURL){
     return{
         body:{
@@ -58,6 +57,7 @@ const emailVerificationMailgenContent = function(username,verificationURL){
         }
     }
 }
+
 const forgotPasswordMailgenContent = function(username,passswordURL){
     return{
         body:{
