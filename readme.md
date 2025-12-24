@@ -61,6 +61,23 @@ A **role-based Project Management REST API** built with **Node.js, Express, Mong
 
 ## 📁 API Routes
 
+### 🔐 Authentication Routes (`/api/v1/auth`)
+
+| Method | Endpoint                           | Access                          |
+| ------ | ---------------------------------- | ------------------------------- |
+| POST   | `/register`                        | Public                          |
+| POST   | `/login`                           | Public                          |
+| POST   | `/logout`                          | Authenticated                   |
+| GET    | `/current-user`                    | Authenticated                   |
+| POST   | `/change-password`                 | Authenticated                   |
+| POST   | `/refresh-token`                   | Public (Refresh Token Required) |
+| GET    | `/verify-email/:verificationToken` | Public                          |
+| POST   | `/forgot-password`                 | Public                          |
+| POST   | `/reset-password/:resetToken`      | Public                          |
+| POST   | `/resend-email-verification`       | Authenticated                   |
+
+---
+
 ### 🗂️ Project Routes (`/api/v1/projects`)
 
 | Method | Endpoint                      | Access         |
@@ -128,19 +145,9 @@ This keeps controllers **clean and business-focused**.
 ```env
 PORT=8000
 MONGODB_URI=mongodb://localhost:27017/projectdb
-CORS = *
-ACCESS_TOKEN_EXPIRY = your_access_expiry
 ACCESS_TOKEN_SECRET=your_access_secret
 REFRESH_TOKEN_SECRET=your_refresh_secret
-REFRESH_TOKEN_EXPIRY=your_refresh_expiry
 NODE_ENV=development
-MAILTRAP_SMTP_HOST = your-creditianls
-MAILTRAP_SMTP_PORT =your-creditianls
-MAILTRAP_SMTP_USER=your-creditianls
-MAILTRAP_SMTP_PASSWORD=your-creditianls
-
-FORGOT_PASSWORD_REDIRECT_URL = http://localhost:3000/forgot-password 
-
 ```
 
 ---
