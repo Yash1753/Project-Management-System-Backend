@@ -178,7 +178,7 @@ npm run dev
 
 ## 👨‍💻 Author
 
-**Yash **
+**Yash**
 Backend Developer | API & System Design Enthusiast
 
 ---
